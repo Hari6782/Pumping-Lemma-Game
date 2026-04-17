@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Pumping Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="d3.v3.js" charset="utf-8"></script>
+    <script src="data.js"></script>
+    <script src="code.js"></script>
+  </head>
+  <body onload="init()">
+    <main class="page-shell">
+      <section class="hero card">
+        <p class="eyebrow">Formal Languages Playground</p>
+        <h1>The Pumping Game</h1>
+        <p class="lead">
+          Challenge the computer's claim that a language is regular by using the pumping lemma to force a contradiction.
+        </p>
+        <div class="exercise-bar">
+          <span class="exercise-label">Choose an exercise</span>
+          <div id="links" class="exercise-links"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <p>
+          The computer claims that the language <span id="lang">$L$</span> over the alphabet
+          <span id="alph">$\Sigma$</span> is regular. It also claims it can build a finite automaton
+          accepting <span id="lang2">$L$</span> using <span id="no_states">$n$</span> states, or a regular grammar
+          defining <span id="lang4">$L$</span> with <span id="no_states4">$n-1$</span> nonterminal symbols.
+        </p>
+
+        <p>
+          Your turn: enter a word belonging to <span id="lang3">$L$</span> that is at least
+          <span id="no_states2">$n$</span> characters long <span id="span1">and press Continue.</span>
+        </p>
+
+        <div id="div1" class="input-panel">
+          <label class="sr-only" for="in1">Input word</label>
+          <textarea id="in1" rows="8" placeholder="Try a4b4, (ab)6, or another word in the language"></textarea>
+          <button type="button" onclick="step1()">Continue</button>
+        </div>
+      </section>
+
+      <section class="card step2 hidden-step">
+        <p class="section-label">Step 1</p>
+        <div class="string-panel">
+          <div class="string-display" id="out1"></div>
+        </div>
+
+        <p>
+          Now <span class="span2">use the sliders to</span> highlight a part of the string that's at least
+          <span id="no_states3">$n$</span> characters long <span class="span2">and press Continue.</span>
+          <span class="span2">The computer will choose a substring from what you highlight.</span>
+        </p>
+
+        <div id="div2" class="selection-panel">
+          <div class="string-display" id="in2"></div>
+          <div class="slider-grid">
+            <label>
+              <span>Start</span>
+              <input type="range" id="range1" step="1">
+            </label>
+            <div class="range-readout">
+              <span id="from"></span>
+              <span>to</span>
+              <span id="to"></span>
+            </div>
+            <label>
+              <span>Length</span>
+              <input type="range" id="range2" step="1">
+            </label>
+          </div>
+          <button type="button" onclick="step2()">Continue</button>
+        </div>
+      </section>
+
+      <section class="card step3 hidden-step">
+        <p class="section-label">Step 2</p>
+        <p>Your selected window:</p>
+        <div class="string-panel">
+          <div class="string-display" id="out2"></div>
+        </div>
+
+        <p>The computer chooses this substring to pump:</p>
+        <div class="string-panel">
+          <div class="string-display" id="out3"></div>
+        </div>
+
+        <p>
+          Change how often that choice appears in the string. Your goal is to make the new string fall
+          outside the language.
+        </p>
+
+        <div class="selection-panel">
+          <div class="string-display" id="in3"></div>
+          <div id="tr1" class="repeat-row">
+            <label>
+              <span>Repetitions</span>
+              <input type="range" id="range3" step="1">
+            </label>
+          </div>
+          <div id="tr2">
+            <button type="button" onclick="step3()">Continue</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card result-card step4 hidden-step" id="resultCard">
+        <p class="section-label">Result</p>
+        <p class="result-line">
+          <span id="span3"></span>
+          <span id="span4" class="result-status"></span>
+        </p>
+        <p class="result-actions">
+          Play the <a id="href1" href="">same</a> language again, retry with the <a id="href2" href="">same number of states</a>,
+          or jump to <a href="?">another</a> random exercise.
+        </p>
+      </section>
+
+      <section class="card notes-card">
+        <p class="section-label">Notes</p>
+        <p>
+          You can enter shorthand such as <code>a5</code> for <code>aaaaa</code>, and expressions like
+          <code>(a3b5)2</code> work too. Characters besides <code>a</code>, <code>b</code>, digits, and parentheses are ignored.
+        </p>
+        <p>
+          Some of these languages are actually regular, so the computer should win every time. Spotting those
+          cases is part of the game.
+        </p>
+        <p>
+          Variables like <span id="var_m">$m$</span> and <span id="var_n">$n$</span> are natural numbers, and
+          <span id="rev_w">$w^{\mathtt{R}}$</span> means the reverse of <span id="var_w">$w$</span>.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
